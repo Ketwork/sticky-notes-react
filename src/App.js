@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 export function App() {
-
+    const [noteInput, setNoteInput] = useState('');
     const addNote = () => {};
 
     return (
@@ -10,9 +10,14 @@ export function App() {
                 Sticky Notes
             </h1>
             <form onSubmit={addNote} className="note-form">
-              <textarea placeholder='Create a new note...'></textarea>
+              <textarea value={noteInput}
+                onChange={event => setNoteInput(event.target.value)}
+                placeholder="Create a new note...">
+              </textarea>
               <button>Add</button>
             </form>
+
+            { noteInput }
         </div>
     );
 }
