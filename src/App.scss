@@ -53,3 +53,25 @@ h1 {
         }
     }
 }
+
+.note {
+  position: absolute;
+  cursor: pointer;
+  background-image: url('assets/post-it-note.png');
+  background-size: cover;
+  top: 100px;
+  left: 300px;
+  height: 200px;
+  width: 200px;
+  padding: 20px;
+
+
+  .text {
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
+    width: 100%;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+  }
+
+}
