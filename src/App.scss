@@ -65,13 +65,12 @@ h1 {
   width: 200px;
   padding: 20px;
 
-
   .text {
     font-family: Arial, Helvetica, sans-serif;
     height: 100%;
     width: 100%;
     white-space: pre-wrap;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
 }

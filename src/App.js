@@ -16,7 +16,7 @@ const notesReducer = (prevState, action) => {
         lastNoteCreated: new Date().toTimeString().slice(0, 8),
       };
       console.log('After ADD_NOTE: ', newState);
-            return newState;
+        return newState;
     }
   }
 }
@@ -39,10 +39,21 @@ export function App() {
       }
 
       dispatch({ type: 'ADD_NOTE', payload: newNote }); //sends to redux store (gets passed to the action argument in notesReducer)
+      setNoteInput(''); // clear form after adding new note
     };
 
+    const dropNote = () => {
+        event.target.style.left = `${event.pageX - 50}px`;
+        event.target.style.top = `${event.pageY - 50}px`;
+    }
+
+    const dragOver = event => {
+        event.stopPropagation();
+        event.preventDefault();
+    }
+
     return (
-        <div className="app">
+        <div className="app" onDragOver={dragOver}> 
             <h1>
                 Sticky Notes
             </h1>
@@ -57,7 +68,13 @@ export function App() {
             {nostesState
               .notes
               .map(note => (
-                <div className='note'>
+                <div className='note'
+                style={{ transform: `rotate(${note.rotate}deg)` }}
+                draggable="true"
+                onDragEnd={dropNote}
+                key={note.id}
+                >
+
                   <pre className='text'>{note.text}</pre>
                 </div>
               ))
