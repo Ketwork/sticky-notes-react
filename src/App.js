@@ -15,23 +15,26 @@ const notesReducer = (prevState, action) => {
         totalNotes: prevState.notes.length + 1,
         lastNoteCreated: new Date().toTimeString().slice(0, 8),
       };
+
       console.log('After ADD_NOTE: ', newState);
-        return newState;
+      return newState;
     }
 
     case 'DELETE_NOTE': {
       const newState = {
-          ...prevState,
-          notes: prevState.notes.filter(note => note.id !== action.payload.id),
+          ...prevState, // copy the entire prevstate object
+          notes: prevState.notes.filter(note => note.id !== action.payload.id), // filter notes that don't equal the one to be deleted
           totalNotes: prevState.notes.length -1,
       }
+      console.log('After ELETE_NOTE: ', newState)
+      return newState
     }
   }
 }
 
 export function App() {
     const [noteInput, setNoteInput] = useState('');
-    const [nostesState, dispatch] = useReducer(notesReducer, initialNotesState)
+    const [notesState, dispatch] = useReducer(notesReducer, initialNotesState)
     
     const addNote = event => {
       event.preventDefault();
@@ -63,7 +66,8 @@ export function App() {
     return (
         <div className="app" onDragOver={dragOver}> 
             <h1>
-                Sticky Notes
+                Sticky Notes ({ notesState.totalNotes })
+                <span>{notesState.notes.length ? `Last note created: ${notesState.lastNoteCreated}` : ' ' }</span> {/* this span is only created if there is a note */}
             </h1>
             <form onSubmit={addNote} className="note-form">
               <textarea value={noteInput}
@@ -73,7 +77,7 @@ export function App() {
               <button>Add</button>
             </form>
 
-            {nostesState
+            {notesState
               .notes
               .map(note => (
                 <div onClick={() => dispatch ({type: 'DELETE_NOTE', payload: note })} 
